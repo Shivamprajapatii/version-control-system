@@ -17,7 +17,7 @@ yargs(hideBin(process.argv))
     initRepo 
   )
 
-//   Command two 
+//  add  Command two 
   .command(
     "add <file>", 
     "Add a file to the repositories",
@@ -27,9 +27,11 @@ yargs(hideBin(process.argv))
             type :'string'
         });
     },
-    addRepo
-    )
-// Command third 
+    (argv) => {
+      addRepo(argv.file);
+    }
+  )
+// commit Command third 
    .command(
     "commit <messgae>",
     "Commit the staged file",
