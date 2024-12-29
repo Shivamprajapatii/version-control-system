@@ -3,7 +3,7 @@ const path = require("path");
 
 
 async function initRepo(){
-    const repoPath = path.resolve(process.cwd(), ".apnaGit");
+    const repoPath = path.resolve(process.cwd(), ".myGit");
     const commitPath = path.join(repoPath, "commits");
 
     try {

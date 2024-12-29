@@ -1,8 +1,9 @@
 # Node.js
 node_modules/
+.myGit
+
 
 # Environment variables
 .env
-.apnaGit
-.config
+
 

@@ -72,7 +72,10 @@ yargs(hideBin(process.argv))
         })
     }
     ,
-    revertRepo
+    (argv) => {
+      revertRepo(argv.commitID);
+    }
+    
   )   
 
   .demandCommand(1, "You nedd at least one command")
