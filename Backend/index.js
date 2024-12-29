@@ -7,8 +7,11 @@ const { pushRepo } = require("./controllers/push");
 const { pullRepo } = require("./controllers/pull");
 const { revertRepo } = require("./controllers/revert");
 
+const { startServer } = require("./controllers/startServer"); 
 
 yargs(hideBin(process.argv))
+//server Start command
+.command("start", "Start a new server", {}, startServer)
 //  Command One
   .command(
     "init",
