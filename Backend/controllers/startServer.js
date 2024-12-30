@@ -5,6 +5,7 @@ const http = require("http");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Server } = require("socket.io");
+const mainRoter = require("../routes/main.router");
 
 dotenv.config();  // .env file ka data process me jata hai so we can access it 
 
@@ -22,12 +23,8 @@ function startServer() {
 
     app.use(express.json());
     app.use(cors({ origin: '*' }));
-    
+    app.use("/", mainRoter);
   
-    app.get("/", function (req, res) {
-        res.send({ message: "Hello world" });
-    });
-
     // Creating Server
     let user = "test";
     const httpServer = http.createServer(app);
