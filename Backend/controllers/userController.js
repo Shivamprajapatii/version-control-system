@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
-const { MongoClient } = require("mongodb");
-const { User } = require("../models/userModel");
+const { MongoClient, ObjectId, ReturnDocument } = require("mongodb");
+
 
 
 dotenv.config();
@@ -17,8 +17,20 @@ async function connectClient() {
 }
 
 
-const getAllUsers = (req, res) => {
-    res.send("all repository");
+async function getAllUsers(req, res) {
+
+    try {
+        await connectClient();
+        const db = client.db("myGit");
+        const userCollection = db.collection("users");
+
+        const users = await userCollection.find({}).toArray();
+        res.json(users);
+    } catch (error) {
+        console.log("Error During fetching Data", error.message);
+        res.status(500).send("Server Error");
+    }
+
 };
 
 async function signUp(req, res) {
@@ -67,33 +79,108 @@ async function signIn(req, res) {
         const userCollection = db.collection("users");
 
         const findUser = await userCollection.findOne({ email });
-        if(!findUser){
-            res.status(500).json({message: "Invalid Credential"});
+        if (!findUser) {
+            res.status(500).json({ message: "Invalid Credential" });
         }
         const isMatchPass = await bcrypt.compare(password, findUser.password);
 
         if (isMatchPass) {
-            const token = jwt.sign({id:findUser._id}, process.env.JWT_SECRET, { expiresIn:"1h" });
-            res.json({ token, userId : findUser._id});
+            const token = jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            res.json({ token, userId: findUser._id });
         }
 
     } catch (error) {
         console.log("Error during login :", err.message);
-        res.status(500).send("server erro");
+        res.status(500).send("server erro")
     }
 
 };
 
-const getUserProfile = (req, res) => {
-    res.send("user profile");
+
+async function getUserProfile(req, res) {
+    const currentId = req.params.id;
+
+    try {
+        await connectClient();
+        const db = client.db("myGit");
+        const userCollection = db.collection("users");
+
+        const user = await userCollection.findOne({
+            _id: new ObjectId(currentId)
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+
+        res.send(user);
+
+    } catch (error) {
+        console.log("Error During fetching Data", error.message);
+        res.status(500).send("Server Error");
+    }
+
 };
 
-const updateUserProfile = (req, res) => {
-    res.send("Profile Updated Successfull");
+async function updateUserProfile(req, res) {
+    const currentId = req.params.id;
+    const { email, password } = req.body;
+
+    try {
+        await connectClient();
+        const db = client.db("myGit");
+        const userCollection = db.collection("users");
+
+        let updatedField = { email };
+        if (password) {
+            const hashPassword = await bcrypt.hash(password, 10);
+            updatedField.password = hashPassword;
+        }
+        console.log(updatedField);
+        const result = await userCollection.findOneAndUpdate(
+            { _id: new ObjectId(currentId) }, // Convert ID to ObjectId
+            { $set: updatedField }, 
+            { ReturnDocument : "after" }
+        );
+
+        console.log(result);
+
+        if (!result.value) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+
+        res.send(result.value);
+
+    } catch (error) {
+        console.log("Error During Update Data", error.message);
+        res.status(500).send("Server Error");
+    }
+
 };
 
-const deleteUser = (req, res) => {
-    res.send("Profle deleted successfull");
+async function deleteUser(req, res) {
+    const currentId = req.params.id;
+
+    try {
+        await connectClient();
+        const db = client.db("myGit");
+        const userCollection = db.collection("users");
+
+
+        const result = await userCollection.deleteOne({
+            _id: new ObjectId(currentId),
+        });
+
+        if (!result.deleteCount == 0) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+
+        res.json({message : "User Profile Deleted"});
+
+    } catch (error) {
+        console.log("Error During delete user Data", error.message);
+        res.status(500).send("Server Error");
+    }
 }
 
 module.exports = {
