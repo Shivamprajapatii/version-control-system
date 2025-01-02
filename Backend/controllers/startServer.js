@@ -11,7 +11,7 @@ dotenv.config();  // .env file ka data process me jata hai so we can access it
 
 function startServer() {
     const app = express();
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT;
     const MONGO_URL = process.env.MONGODB_URL;
 
     mongoose.connect(MONGO_URL)

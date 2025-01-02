@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 import {useNavigate, useRoutes } from "react-router-dom";
 
-
 // Page list
 import Dashboard from './dashboard/Dashboard';
 import Profile from './user/Profile';
@@ -21,11 +20,11 @@ const ProjectRouter = () => {
             setCurrentUser(userIdFromStorage);
         }
 
-        if(!userIdFromStorage && !["/auth","/signup"].includes(window.location.pathname)){
-            navigte("/auth");
+        if(!userIdFromStorage && !["/signin","/signup"].includes(window.location.pathname)){
+            navigte("/signin");
         }
 
-        if(userIdFromStorage && window.location.pathname == "/auth"){
+        if(userIdFromStorage && window.location.pathname == "/signin"){
             navigte("/");
         }
     }, [currentUser, navigte, setCurrentUser]); // if isme se koi bhi value change hua then means trigger reload
@@ -36,7 +35,7 @@ const ProjectRouter = () => {
             element : < Dashboard />
         },
         {
-            path : "/auth",
+            path : "/signin",
             element : < Signin />
         },
         {
