@@ -37,7 +37,7 @@ async function getAllRepository(req, res) {
 
     try {
         const repository = await Repository.find({}).populate("owner").populate("issues");
-        res.status(400).json(repository);
+        res.status(200).json(repository);
     } catch (error) {
         console.log("Error During fetching all repository", error.message);
         res.status(500).send("Server Error");
@@ -46,11 +46,11 @@ async function getAllRepository(req, res) {
 };
 
 async function fetchRepositoryById(req, res) {
-    const id = req.params.id;
+    const { id } = req.params;
    
     try {
         const repository = await Repository.find({_id: id }).populate("owner").populate("issues");
-        
+
         res.json(repository);
 
     } catch (error) {
@@ -74,8 +74,8 @@ async function fetchRepositoryByName(req, res) {  // searching feature is done h
 };
 
 async function fetchRepositoryForCurrentUser(req, res) {
-    const userId = req.user;
-
+    const {userId } = req.params;
+    
     try {
         const repositories = await Repository.find({ owner : userId });
         if(!repositories || repositories.length == 0){

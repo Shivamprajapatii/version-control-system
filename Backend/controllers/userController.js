@@ -63,6 +63,7 @@ async function signUp(req, res) {
         const token = jwt.sign({ id: result.insertId }, process.env.JWT_SECRET, { expiresIn: "1h" })
 
         res.json({token, userId : result.insertId});
+        console.log(token.id);
     }
     catch (err) {
         console.log("Error during signup", err.message);
@@ -90,7 +91,7 @@ async function signIn(req, res) {
         }
 
     } catch (error) {
-        console.log("Error during login :", err.message);
+        console.log("Error during login :", error.message);
         res.status(500).send("server erro")
     }
 
