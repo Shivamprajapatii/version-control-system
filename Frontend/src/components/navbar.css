@@ -1,0 +1,16 @@
+nav {
+    display: flex;
+    
+}
+
+nav img {
+    width: 10%;
+}
+
+nav div {
+    display: flex;
+}
+
+nav h3, p {
+    margin-left: 10rem;
+}
