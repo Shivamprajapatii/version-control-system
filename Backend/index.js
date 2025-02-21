@@ -11,7 +11,7 @@ const { startServer } = require("./controllers/startServer");
 
 yargs(hideBin(process.argv))
 //server Start command
-.command("start", "Start a new server", {}, startServer)
+.command("start", "Start a new server", {}, startServer())
 //  Command One
   .command(
     "init",

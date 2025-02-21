@@ -21,7 +21,7 @@ const Signup = () => {
 
       try {
         setLoading(true);
-        const res = await axios.post("http://localhost:3000/signup/",{
+        const res = await axios.post("http://localhost:3000/signup",{
           email : email,
           username : username,
           password : password
@@ -111,7 +111,7 @@ const Signup = () => {
 
         <div className="pass-box">
           <p>
-            Already have an account? < Link to="/signin">SignIn</Link>
+            Already have an account? < Link to="/login">Login</Link>
           </p>
         </div>
       </div>
