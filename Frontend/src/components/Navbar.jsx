@@ -10,7 +10,7 @@ function Navbar() {
       transition={{ duration: 0.5 }}
       className="flex justify-between items-center bg-gray-900 text-white px-6 py-4 shadow-lg"
     >
-      {/* Logo */}
+     
       <Link to={"/"}>
         <motion.div
           whileHover={{ scale: 1.1 }}
@@ -25,7 +25,7 @@ function Navbar() {
         </motion.div>
       </Link>
 
-      {/* Navigation Links */}
+      
       <div className="flex gap-6">
         <Link to={"/create"}>
           <motion.p
@@ -44,6 +44,16 @@ function Navbar() {
             Profile
           </motion.p>
         </Link>
+        <motion.div   whileHover={{ scale: 1.1, color: "#3b82f6" }}
+            className="cursor-pointer transition-colors duration-300"
+        >
+            <h1><button className="cursor-pointer transition-colors duration-300" onClick={()=> {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+
+                location.reload("/auth");
+            }}>Logout</button></h1>
+        </motion.div>
       </div>
     </motion.nav>
   );
