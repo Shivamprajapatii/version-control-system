@@ -11,13 +11,10 @@ function Dashboard() {
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
-
     const fetchRepositoris = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/repo/user/${userId}`);
-        const data = await response.json();
-
-        setRepositories(data.repositories);
+        const response = await axios.get(`http://localhost:3000/repo/user/${userId}`);
+        setRepositories(response.data.repositories);
 
       } catch (error) {
         console.error("Error while fetching repositories:", error);
@@ -26,11 +23,10 @@ function Dashboard() {
 
     const fetchSuggestedRepositoris = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/repo/all`);
-        const data = await response.json();
 
-        setSuggestedRepositories(data);
-        console.log(suggestedRepositories);
+        const response = await axios.get(`http://localhost:3000/repo/all`);
+      
+        setSuggestedRepositories(response.data);
 
       } catch (error) {
         console.error("Error while fetching suggested repositories:", error);
