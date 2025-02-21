@@ -85,10 +85,13 @@ async function signIn(req, res) {
         }
         const isMatchPass = await bcrypt.compare(password, findUser.password);
 
-        if (isMatchPass) {
-            const token = jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            res.json({ token, userId: findUser._id });
+        if (!isMatchPass) {
+           return res.json({
+              message : "Wrong Credianls",
+           })
         }
+        const token = jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        res.json({ token, userId: findUser._id });
 
     } catch (error) {
         console.log("Error during login :", error.message);
