@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../Navbar';
+import Footer from '../Footer';
 
 function Dashboard() {
   const [repositories, setRepositories] = useState([]);
@@ -110,6 +111,7 @@ function Dashboard() {
           </ul>
         </motion.aside>
       </section>
+      <Footer />
     </>
   );
 }

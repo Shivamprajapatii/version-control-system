@@ -19,7 +19,7 @@ function Footer() {
         </div>
         <div className="footer-section">
           <h4>Contact</h4>
-          <p>Email: support@githubclone.com</p>
+          <p>Email: support@shivam.com</p>
           <p>Phone: +1 234 567 890</p>
         </div>
       </div>

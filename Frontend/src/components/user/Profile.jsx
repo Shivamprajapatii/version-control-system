@@ -6,6 +6,7 @@ import Navbar from '../Navbar';
 import { UnderlineNav } from "@primer/react";
 import { BookIcon, RepoIcon } from "@primer/octicons-react"
 import HeatMap from '@uiw/react-heat-map';
+import Footer from '../Footer';
 
 function Profile() {
   const navigate = useNavigate();
@@ -126,6 +127,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
