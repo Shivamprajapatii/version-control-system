@@ -5,12 +5,14 @@ import { motion } from 'framer-motion';
 import { RepoIcon } from '@primer/octicons-react';
 
 function CreateRepository() {
+
+  console.log(localStorage.getItem('userId'))
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     content: '',
-    visibility: 'public',
+    visibility: true,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -27,7 +29,7 @@ function CreateRepository() {
         throw new Error('Repository name is required');
       }
 
-      const response = await axios.post('/api/repositories', {
+      const response = await axios.post('http://localhost:3000/repo/create', {
         ...formData,
         owner: localStorage.getItem('userId'),
       });
