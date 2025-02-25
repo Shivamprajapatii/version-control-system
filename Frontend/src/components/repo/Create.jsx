@@ -36,7 +36,7 @@ function CreateRepository() {
 
       setSuccess('Repository created successfully!');
       setTimeout(() => {
-        navigate(`/repo/${response.data.repositoryId}`);
+        navigate(`/`);
       }, 1500);
     } catch (err) {
       setError(err.response?.data?.error || err.message);
