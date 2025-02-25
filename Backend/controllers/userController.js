@@ -34,7 +34,7 @@ async function getAllUsers(req, res) {
 };
 
 async function signUp(req, res) {
-    const { username, email, password } = req.body;
+    const { username, email, password, imageUrl } = req.body;
 
     try {
         await connectClient();
@@ -52,7 +52,7 @@ async function signUp(req, res) {
             username: username,
             email: email,
             password: hashPassword,
-
+            imageUrl,
             repository: [],
             followedUsers: [],
             starRepository: []

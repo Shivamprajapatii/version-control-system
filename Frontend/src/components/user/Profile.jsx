@@ -74,7 +74,7 @@ function Profile() {
             {/* Profile Section */}
             <div className="w-full md:w-80 bg-gray-800 rounded-xl p-6 shadow-xl">
               <div className="flex flex-col items-center">
-                <div className="w-32 h-32 bg-gray-700 rounded-full mb-6" />
+                <img className="w-32 h-32 bg-gray-700 rounded-full mb-6"  src={userDetails.imageUrl} alt='UserImage'/>
                 
                 <h3 className="text-2xl font-bold text-white mb-4">
                   {userDetails.username}
