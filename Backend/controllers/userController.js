@@ -81,7 +81,7 @@ async function signIn(req, res) {
 
         const findUser = await userCollection.findOne({ email });
         if (!findUser) {
-            res.status(500).json({ message: "Invalid Credential" });
+            return res.status(500).json({ message: "Invalid Credential" });
         }
         const isMatchPass = await bcrypt.compare(password, findUser.password);
 
