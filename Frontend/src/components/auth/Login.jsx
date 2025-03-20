@@ -20,8 +20,7 @@ function Login() {
         email: email,
         password: password,
       });
-      console.log(res);
-      console.log(res.data.message);
+      
       const token = res.data.token;
       const userId = res.data.userId;
 
@@ -34,7 +33,7 @@ function Login() {
       window.location.href = "/";
     } catch (error) {
       console.error(error);
-      alert("Failed to Sign In");
+      alert("Wrong Detail");
       setLoading(false);
     }
   }
