@@ -86,10 +86,10 @@ async function signIn(req, res) {
         const isMatchPass = await bcrypt.compare(password, findUser.password);
 
         if (!isMatchPass) {
-           return res.json({
+           return res.status(401).json({
               message : "Wrong Credianls",
            })
-        }
+        } 
         const token = jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.json({ token, userId: findUser._id });
 

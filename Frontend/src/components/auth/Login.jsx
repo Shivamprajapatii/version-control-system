@@ -20,7 +20,8 @@ function Login() {
         email: email,
         password: password,
       });
-
+      console.log(res);
+      console.log(res.data.message);
       const token = res.data.token;
       const userId = res.data.userId;
 
