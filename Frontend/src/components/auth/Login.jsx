@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuth } from "../../authContext";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import logo from "../../assets/github-mark-white.svg";
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -47,7 +47,7 @@ function Login() {
         className="bg-gray-800 text-white rounded-2xl shadow-lg p-8 max-w-md w-full"
       >
         <div className="flex flex-col items-center mb-6">
-          <img src={logo} alt="Logo" className="w-16 h-16 mb-3" />
+          <img src="src/assets/Logo.png" alt="Logo" className="w-16 h-16 mb-3" />
           <h2 className="text-3xl font-bold">Login</h2>
         </div>
 
