@@ -17,11 +17,11 @@ function Navbar() {
           className="flex items-center gap-2 cursor-pointer"
         >
           <img
-            src="https://www.github.com/images/modules/logos_page/GitHub-Mark.png"
+            src="src/assets/Logo.png"
             alt="github logo"
             className="w-10 h-10"
           />
-          <h3 className="text-xl font-semibold">GitHub</h3>
+          <h3 className="text-xl font-semibold">Version Control</h3>
         </motion.div>
       </Link>
 
