@@ -8,7 +8,7 @@ function Navbar() {
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex justify-between items-center bg-gray-900 text-white px-6 py-4 shadow-lg"
+      className="flex justify-between items-center  text-black px-6 border rounded-4xl black py-4 shadow-lg"
     >
      
       <Link to={"/"}>

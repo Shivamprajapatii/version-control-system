@@ -49,7 +49,7 @@ function Dashboard() {
   return (
     <>
       <Navbar />
-      <section className="flex flex-col md:flex-row min-h-screen bg-gray-900 text-white p-6 gap-6">
+      <section className="flex flex-col md:flex-row min-h-screen bg-white text-white p-6 gap-6">
         {/* Suggested Repositories */}
         <motion.aside
           initial={{ x: -100, opacity: 0 }}
