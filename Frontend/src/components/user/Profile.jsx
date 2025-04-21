@@ -1,134 +1,106 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import "./profile.css";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { motion } from 'framer-motion';
 import Navbar from '../Navbar';
-import { UnderlineNav } from "@primer/react";
-import { BookIcon, RepoIcon } from "@primer/octicons-react"
-import HeatMap from '@uiw/react-heat-map';
 import Footer from '../Footer';
+import { UnderlineNav } from '@primer/react';
+import { BookIcon, RepoIcon } from '@primer/octicons-react';
+import HeatMap from '@uiw/react-heat-map';
 
 function Profile() {
   const navigate = useNavigate();
-  const [userDetails, setUserDetails] = useState({username: "username"});
+  const [userDetails, setUserDetails] = useState({ username: 'Loading...', followers: 0, following: 0, imageUrl: '' });
 
   useEffect(() => {
     async function fetchDetails() {
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem('userId');
       if (userId) {
         try {
-          const response = await axios.get(`http://localhost:3000/userProfile/${userId}`);
-          setUserDetails(response.data);
-        } catch (error) {
-          console.error("Cannot fetch User Details!");
+          const { data } = await axios.get(`http://localhost:3000/userProfile/${userId}`);
+          setUserDetails(data);
+        } catch {
+          console.error('Cannot fetch User Details!');
         }
       }
     }
     fetchDetails();
   }, []);
 
-  // Heatmap configuration
-  const heatmapData = [
-    { date: '2024-01-01', count: 2 },
-    { date: '2024-01-05', count: 5 },
-    // Add more data points as needed
-  ];
+  const heatmapData = Array.from({ length: 365 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    return { date: date.toISOString().slice(0, 10), count: Math.floor(Math.random() * 5) };
+  }).reverse();
 
   const weekLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-white to-gray-100">
       <Navbar />
-      <div className="bg-gray-900 min-h-screen">
-        <UnderlineNav 
-          aria-label="Repository" 
-          className="bg-gray-800 px-6 py-4 shadow-lg"
-        >
-          <UnderlineNav.Item
-            aria-current="page"
-            icon={BookIcon}
-            className="text-gray-300 hover:text-white text-opacity-90 font-medium text-lg px-4 py-2 transition-colors duration-300"
-            sx={{
-              '&[aria-current="page"]': { 
-                color: 'white',
-                borderBottomColor: 'white',
-                fontWeight: '600'
-              },
-            }}
-          >
-            Overview
-          </UnderlineNav.Item>
 
-          <UnderlineNav.Item
-            onClick={() => navigate("/repo")}
-            icon={RepoIcon}
-            className="text-gray-300 hover:text-white text-opacity-90 font-medium text-lg px-4 py-2 transition-colors duration-300"
-          >
-            Starred Repositories
-          </UnderlineNav.Item>
-        </UnderlineNav>
-
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row gap-8">
-            {/* Profile Section */}
-            <div className="w-full md:w-80 bg-gray-800 rounded-xl p-6 shadow-xl">
-              <div className="flex flex-col items-center">
-                <img className="w-32 h-32 bg-gray-700 rounded-full mb-6 object-cover"  src={userDetails.imageUrl} alt='UserImage'/>
-                
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  {userDetails.username}
-                </h3>
-
-                <button className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300 mb-6">
-                  Follow
-                </button>
-
-                <div className="flex justify-between w-full text-gray-400 px-4">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-white">10</p>
-                    <p className="text-sm">Followers</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-white">3</p>
-                    <p className="text-sm">Following</p>
-                  </div>
-                </div>
-              </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8"
+      >
+        {/* Profile Card */}
+        <div className="col-span-1 bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6 flex flex-col items-center text-center">
+          <img
+            src={userDetails.imageUrl || '/assets/default-avatar.png'}
+            alt="User avatar"
+            className="w-32 h-32 rounded-full border-4 border-white shadow-md mb-4 object-cover"
+          />
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">{userDetails.username}</h2>
+          <div className="flex space-x-6 text-gray-700 mb-4">
+            <div>
+              <p className="text-xl font-semibold">{userDetails.followers}</p>
+              <p className="text-sm">Followers</p>
             </div>
-
-            {/* Heatmap Section */}
-            <div className="flex-1 bg-gray-800 rounded-xl p-6 shadow-xl">
-              <h4 className="text-xl font-semibold text-white mb-6">
-                Contribution Activity
-              </h4>
-              <div className="overflow-x-auto pb-4">
-                <HeatMap 
-                  value={heatmapData}
-                  className="bg-gray-700 rounded-lg p-4"
-                  style={{ color: 'white' }}
-                  startDate={new Date('2024/01/01')}
-                  endDate={new Date('2024/12/31')}
-                  weekLabels={weekLabels}
-                  monthLabels={monthLabels}
-                  rectProps={{
-                    rx: 3,
-                    className: 'fill-green-500 hover:fill-green-400 transition-colors duration-200',
-                  }}
-                  panelColors={{
-                    0: '#1f2937',
-                    2: '#065f46',
-                    4: '#059669',
-                    10: '#34d399',
-                  }}
-                />
-              </div>
+            <div>
+              <p className="text-xl font-semibold">{userDetails.following}</p>
+              <p className="text-sm">Following</p>
             </div>
           </div>
+          <button
+            className="mt-auto px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+            onClick={() => alert('Feature coming soon!')}
+          >
+            Follow
+          </button>
         </div>
-      </div>
+
+        {/* Contribution Heatmap and Nav */}
+        <div className="col-span-2 space-y-6">
+          <UnderlineNav aria-label="Profile navigation" className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-2xl px-6 py-3 shadow-inner">
+            <UnderlineNav.Item aria-current="page" icon={BookIcon} className="text-gray-700">
+              Overview
+            </UnderlineNav.Item>
+            <UnderlineNav.Item onClick={() => navigate('/repo')} icon={RepoIcon} className="text-gray-700">
+              Starred
+            </UnderlineNav.Item>
+          </UnderlineNav>
+
+          <div className="bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Contribution Activity</h3>
+            <HeatMap
+              value={heatmapData}
+              rectSize={14}
+              rectGap={4}
+              startDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))}
+              endDate={new Date()}
+              weekLabels={weekLabels}
+              monthLabels={monthLabels}
+              panelColors={{ 0: '#f0f0f0', 1: '#c6e48b', 3: '#7bc96f', 5: '#239a3b', 10: '#196127' }}
+            />
+          </div>
+        </div>
+      </motion.div>
+
       <Footer />
-    </>
+    </div>
   );
 }
 
