@@ -38,14 +38,14 @@ function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
+    <div className="flex items-center justify-center min-h-screen px-4">
       <motion.div 
         initial={{ opacity: 0, y: -50 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.5 }} 
-        className="bg-gray-800 text-white rounded-2xl shadow-lg p-8 max-w-md w-full"
+        className="bg-gray-800 text-white rounded-2xl shadow-lg p-4 max-w-md w-full"
       >
-        <div className="flex flex-col items-center mb-6">
+        <div className="flex flex-col items-center">
           <img src="src/assets/Logo.png" alt="Logo" className="w-16 h-16 mb-3 object-cover border-10" />
           <h2 className="text-3xl font-bold">Login</h2>
         </div>
