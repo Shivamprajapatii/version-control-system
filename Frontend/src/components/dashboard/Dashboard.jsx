@@ -46,71 +46,152 @@ function Dashboard() {
     }
   }, [searchQuery, repositories]);
 
+  // Metrics
+  const totalRepos = repositories.length;
+  const totalSuggestions = suggestedRepositories.length;
+
   return (
     <>
       <Navbar />
-      <section className="flex flex-col md:flex-row min-h-screen bg-white text-white p-6 gap-6">
-        {/* Suggested Repositories */}
-        <motion.aside
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="md:w-1/4 bg-gray-800 p-4 rounded-lg shadow-lg"
-        >
-          <h3 className="text-xl font-bold mb-3">Suggested Repositories</h3>
-          {suggestedRepositories.map((repo) => (
-            <motion.div
-              key={repo._id}
-              whileHover={{ scale: 1.05 }}
-              className="bg-gray-700 p-3 rounded-lg mb-2"
-            >
-              <h4 className="text-lg font-semibold">{repo.name}</h4>
-              <p className="text-gray-400">{repo.description}</p>
-            </motion.div>
-          ))}
-        </motion.aside>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-8">
+        {/* Header */}
+        <header className="max-w-7xl mx-auto mb-8">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl font-extrabold text-gray-800"
+          >
+            Welcome Back, Developer!
+          </motion.h1>
+          <p className="mt-2 text-gray-600">
+            Here's what's happening in your GitHub world.
+          </p>
+        </header>
 
-        {/* Main Content */}
-        <main className="flex-1 bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 className="text-2xl font-bold mb-4">Your Repositories</h3>
-          <div className="relative">
-            <input
-              type="text"
-              value={searchQuery}
-              placeholder="Search here..."
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mt-4 space-y-3">
-            {searchResults.map((repo) => (
-              <motion.div
-                key={repo._id}
-                whileHover={{ scale: 1.05 }}
-                className="bg-gray-700 p-4 rounded-lg shadow-lg"
-              >
-                <h4 className="text-lg font-semibold">{repo.name}</h4>
-                <p className="text-gray-400">{repo.description}</p>
-              </motion.div>
-            ))}
-          </div>
+        {/* Metrics Cards */}
+        <motion.section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="p-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 rounded-2xl shadow-md"
+          >
+            <h3 className="text-lg font-medium text-gray-700">Your Repositories</h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900">{totalRepos}</p>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="p-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 rounded-2xl shadow-md"
+          >
+            <h3 className="text-lg font-medium text-gray-700">Suggested Repos</h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900">{totalSuggestions}</p>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="p-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 rounded-2xl shadow-md"
+          >
+            <h3 className="text-lg font-medium text-gray-700">Search Results</h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900">{searchResults.length}</p>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="p-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 rounded-2xl shadow-md"
+          >
+            <h3 className="text-lg font-medium text-gray-700">Upcoming Events</h3>
+            <p className="mt-2 text-2xl font-bold text-gray-900">3</p>
+          </motion.div>
+        </motion.section>
+
+        {/* Main Grid */}
+        <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Suggested Repositories */}
+          <motion.aside
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="p-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 rounded-2xl shadow-md"
+          >
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Suggested Repositories</h3>
+            <div className="space-y-4 max-h-[60vh] overflow-y-auto">
+              {suggestedRepositories.map((repo) => (
+                <motion.div
+                  key={repo._id}
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.2 }}
+                  className="p-4 border-l-4 border-blue-500 bg-white bg-opacity-20 backdrop-filter backdrop-blur-md rounded-lg"
+                >
+                  <h4 className="text-xl font-semibold text-gray-800">{repo.name}</h4>
+                  <p className="mt-1 text-gray-600">{repo.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.aside>
+
+          {/* Your Repositories & Search */}
+          <section className="lg:col-span-2 space-y-6">
+            <div className="p-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 rounded-2xl shadow-md">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4">Your Repositories</h3>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search your repos..."
+                  className="w-full p-3 bg-white bg-opacity-30 backdrop-filter backdrop-blur-sm rounded-lg placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[60vh] overflow-y-auto">
+                {searchResults.map((repo) => (
+                  <motion.div
+                    key={repo._id}
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.2 }}
+                    className="p-5 border border-gray-200 bg-white bg-opacity-20 backdrop-filter backdrop-blur-md rounded-lg"
+                  >
+                    <h4 className="text-lg font-semibold text-gray-800">{repo.name}</h4>
+                    <p className="mt-1 text-gray-600">{repo.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
         </main>
 
-        {/* Upcoming Events */}
-        <motion.aside
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
+        {/* Upcoming Events Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="md:w-1/4 bg-gray-800 p-4 rounded-lg shadow-lg"
+          className="max-w-7xl mx-auto mt-12 p-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg border border-white border-opacity-30 rounded-2xl shadow-md"
         >
-          <h3 className="text-xl font-bold mb-3">Upcoming Events</h3>
-          <ul className="space-y-2">
-            <li className="p-2 bg-gray-700 rounded-lg">🚀 Tech Conference - Dec 15</li>
-            <li className="p-2 bg-gray-700 rounded-lg">🎤 Tech Conference - Jan 25</li>
-            <li className="p-2 bg-gray-700 rounded-lg">💡 Tech Conference - Feb 15</li>
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Upcoming Events</h3>
+          <ul className="space-y-3">
+            <li className="flex items-center p-4 bg-white bg-opacity-20 backdrop-filter backdrop-blur-md rounded-lg">
+              <span className="text-2xl mr-3">🚀</span>
+              <div>
+                <p className="font-medium text-gray-800">Tech Conference</p>
+                <p className="text-gray-600">December 15, 2025</p>
+              </div>
+            </li>
+            <li className="flex items-center p-4 bg-white bg-opacity-20 backdrop-filter backdrop-blur-md rounded-lg">
+              <span className="text-2xl mr-3">🎤</span>
+              <div>
+                <p className="font-medium text-gray-800">Developer Summit</p>
+                <p className="text-gray-600">January 25, 2026</p>
+              </div>
+            </li>
+            <li className="flex items-center p-4 bg-white bg-opacity-20 backdrop-filter backdrop-blur-md rounded-lg">
+              <span className="text-2xl mr-3">💡</span>
+              <div>
+                <p className="font-medium text-gray-800">Innovation Expo</p>
+                <p className="text-gray-600">February 15, 2026</p>
+              </div>
+            </li>
           </ul>
-        </motion.aside>
-      </section>
+        </motion.section>
+      </div>
       <Footer />
     </>
   );
