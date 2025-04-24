@@ -73,11 +73,7 @@ function Footer() {
               <Mail size={24} />
             </a>
           </div>
-          <img
-            src="/assets/logo-footer.svg"
-            alt="Logo"
-            className="w-24 opacity-80 hover:opacity-100 transition"
-          />
+         
         </div>
       </div>
 
