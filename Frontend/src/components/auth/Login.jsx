@@ -43,7 +43,7 @@ function Login() {
         initial={{ opacity: 0, y: -50 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.5 }} 
-        className="bg-gray-800 text-white rounded-2xl shadow-lg p-4 max-w-md w-full"
+        className="bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg p-4 max-w-md w-full"
       >
         <div className="flex flex-col items-center">
           <img src="src/assets/Logo.png" alt="Logo" className="w-16 h-16 mb-3 object-cover border-10" />
@@ -57,7 +57,7 @@ function Login() {
               autoComplete="off"
               name="Email"
               id="Email"
-              className="w-full px-4 py-2 mt-1 bg-gray-700 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-4 py-2 mt-1 bg-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -71,7 +71,7 @@ function Login() {
               autoComplete="off"
               name="Password"
               id="Password"
-              className="w-full px-4 py-2 mt-1 bg-gray-700 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-4 py-2 mt-1 bg-white-700 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

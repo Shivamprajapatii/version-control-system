@@ -7,7 +7,7 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 const mainRoter = require("../routes/main.router");
 
-dotenv.config();  // .env file ka data process me jata hai so we can access it 
+dotenv.config(); 
 
 function startServer() {
     const app = express();
@@ -48,7 +48,6 @@ function startServer() {
     const db = mongoose.connection;
     db.once("open", async ()=> {
         console.log("CRUD operation called");
-        // CRUD Operation
     });
     
     httpServer.listen(PORT, ()=> {
